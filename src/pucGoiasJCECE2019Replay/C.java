@@ -6,6 +6,9 @@
 package pucGoiasJCECE2019Replay;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -25,6 +28,7 @@ public class C {
             for(int i = 0; i < m; ++i) {
                 array.add(input.nextLine());
             }
+            Collections.sort(array, Comparator.comparing(String::length));
             int res = 0;
             for(int i = 0; i < n; ++i) {
                 if(array.indexOf(palavra[i]) == -1) {
@@ -33,42 +37,30 @@ public class C {
             }
             n--;
             for(int i = 0; i <= n; ++i) {
+                String palavra1 = "";
+                String palavra2 = "";
                 for(int j = n; j > i; --j) {
-                    String palavra1 = "";
-                    String palavra2 = "";
-                    int v = (j + i) / 2;
-                    int l = i;
-                    for(int z = j; z > v; --z) {
-                        if(palavra[l].equals(palavra[z])) {
-                            palavra1 += palavra[l];
-                            palavra2 += palavra[z];
-                            ++l;
-                        } else {
-                           palavra1 = "";
-                           palavra2 = "";
-                           break;
-                        }
-                    }
-                    if(!palavra1.equals("")) {
-                        if((j - i)% 2 == 0) {
-                            palavra2 += palavra[v];
-                            palavra2 = new StringBuffer(palavra2).reverse().toString();
+                    if(palavra[i].equals(palavra[j]) ) {
+                        int v = (j + i) / 2;
+                        palavra1 = String.join("", Arrays.copyOfRange(palavra, i, v+1));
+                        palavra2 = String.join("", Arrays.copyOfRange(palavra, v+1, j+1));
+                        String aux = new StringBuffer(palavra2).reverse().toString();
+                        if(palavra1.equals(aux) || ((j + i)%2 == 0 && String.join("", Arrays.copyOfRange(palavra, i, v)).equals(aux))) {
                             palavra1 += palavra2;
-                        } else {
-                            palavra2 = new StringBuffer(palavra2).reverse().toString();
-                            palavra1 += palavra2;
-                        }
-                        int len = palavra1.length();
-                        for(String s : array) {
-                            palavra1 = palavra1.replace(s, "");
-                            if(palavra1.length() != len) break;
-                        }
-                        if(palavra1.length() == len) {
+                            int len = palavra1.length();
+                            for(String s : array) {
+                                if(s.length() <= len) {
+                                    palavra1 = palavra1.replace(s, "");
+                                } else {
+                                    break;
+                                }
+                                if(palavra1.length() != len) break;
+                            }
+                            if(palavra1.length() == len) {
                             ++res;
                         }
+                        }
                     }
-                    
-                    
                 }
             }
             System.out.println(res);
