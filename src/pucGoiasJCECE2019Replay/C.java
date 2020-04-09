@@ -58,7 +58,7 @@ public class C {
                             }
                             if(palavra1.length() == len) {
                             ++res;
-                        }
+                            }
                         }
                     }
                 }

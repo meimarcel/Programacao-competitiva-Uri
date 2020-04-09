@@ -1,0 +1,2 @@
+olimpiadaDeInformatica2019.Pair
+olimpiadaDeInformatica2019.Uri3061
